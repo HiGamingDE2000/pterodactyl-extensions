@@ -1,0 +1,22 @@
+{
+    "$schema": "./node_modules/@pterodactyl/sdk/manifest.schema.json",
+    "id": "dark-theme",
+    "name": "Dark Theme",
+    "version": "1.0.0",
+    "description": "A deeper, neutral dark theme built purely from design-token overrides, with an admin-selectable accent colour. Doubles as a template for theme authors.",
+    "author": "Anthony",
+    "requires": {
+        "panel": "^2.0.0-dev",
+        "sdk": "^2.0.0-beta.4",
+        "php": "^8.3"
+    },
+    "provider": "DarkTheme\\DarkThemeProvider",
+    "autoload": {
+        "DarkTheme\\": "src"
+    },
+    "ui": {
+        "entry": "dist/client.js",
+        "mode": "native",
+        "prefix": "dkt"
+    }
+}

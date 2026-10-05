@@ -1,0 +1,216 @@
+/*
+ * Dark Theme - token overrides for the Pterodactyl panel.
+ *
+ * This file IS the theme. It contains nothing but CSS custom properties: no
+ * component selectors, no !important, no Tailwind. Copy it, change the values,
+ * and you have your own theme (see README, "Making your own theme").
+ *
+ * HOW IT WINS THE CASCADE
+ *   - The panel declares its tokens in `:root` (light scaffold) and `.dark`
+ *     (the shipping theme), both unlayered, both specificity (0,1,0), in
+ *     resources/scripts/assets/tailwind.css. `<html class="dark">` is hard-coded
+ *     in the Blade shell, so `.dark` is what users actually see.
+ *   - We use `:root.dark` (0,2,0). That beats the panel's blocks on specificity
+ *     alone, so it does not matter in which order the stylesheets load, and it
+ *     also outranks a `p:theme:apply` stylesheet written with plain `.dark`.
+ *   - Keep these rules OUT of any `@layer`. Unlayered declarations always beat
+ *     layered ones, and the panel's tokens are unlayered - a theme wrapped in
+ *     `@layer theme { ... }` would silently lose every single override.
+ *   - Scoping to `.dark` means that if the panel ever ships a light mode by
+ *     removing the class, this theme steps aside instead of fighting it.
+ *
+ * VALUES
+ *   OKLCH (lightness chroma hue), like the panel's own tokens. One neutral hue
+ *   (264, a cool blue-grey) at very low chroma for every surface, stepped only in
+ *   lightness; one brand hue for primary/accent/ring. Contrast ratios for every
+ *   text/surface pair are computed by `npm run contrast` and listed in the README.
+ *
+ *   Surface ladder (lightness):  terminal .13 < background .15 < card .205
+ *                                < muted .235 < popover .25 < input .27 < secondary .285
+ */
+
+:root.dark {
+    /* ------------------------------------------------------------------ *
+     * 1. SURFACES - what things sit on
+     * ------------------------------------------------------------------ */
+    --background: oklch(0.15 0.012 264); /* page canvas (body), overlay masks (bg-background/50) */
+    --card: oklch(0.205 0.013 264); /* cards, table rows, boxed panels */
+    --muted: oklch(0.235 0.013 264); /* code blocks, quiet panels, tracks */
+    --popover: oklch(0.25 0.014 264); /* dialogs, dropdowns, tooltips, hover rows */
+    --secondary: oklch(0.285 0.015 264); /* secondary button fill - the lightest surface in the theme */
+    --sunken: color-mix(in oklab, var(--card) 78%, black); /* recessed wells on a card (progress tracks, chips) */
+
+    /* ------------------------------------------------------------------ *
+     * 2. TEXT - what is written on those surfaces
+     * ------------------------------------------------------------------ */
+    --foreground: oklch(0.93 0.008 264); /* body text, headings, icons */
+    --card-foreground: var(--foreground);
+    --popover-foreground: var(--foreground);
+    --secondary-foreground: var(--foreground);
+    --muted-foreground: oklch(0.74 0.015 264); /* labels, help text, metadata */
+
+    /* ------------------------------------------------------------------ *
+     * 3. BRAND - one hue, three jobs
+     *    These colours are used BOTH as fills (bg-primary) and as text on dark
+     *    surfaces (text-primary, text-accent). To pass AA in both roles they are
+     *    light, and the text on top of them is dark "ink" rather than white.
+     *    (The admin "Accent colour" setting replaces --primary/--accent/--ring.)
+     * ------------------------------------------------------------------ */
+    --primary: oklch(0.72 0.13 264); /* primary button fill, info badges, text-primary */
+    --primary-foreground: oklch(0.17 0.02 264); /* ink on --primary */
+    --accent: oklch(0.8 0.1 264); /* links, active nav underline, progress bar */
+    --accent-foreground: var(--primary-foreground); /* ink on a solid --accent chip */
+    --ring: oklch(0.76 0.12 264); /* keyboard focus ring (outline on buttons/links, editor focus) */
+
+    /* ------------------------------------------------------------------ *
+     * 4. LINES AND CONTROLS
+     * ------------------------------------------------------------------ */
+    --border: oklch(0.31 0.015 264); /* dividers, card outlines (decorative) */
+    --input: oklch(0.27 0.015 264); /* FILL and border of inputs, selects, switches, checkboxes */
+
+    /* ------------------------------------------------------------------ *
+     * 5. STATUS - destructive / success / warning / caution
+     *    Same dual role as the brand colours: solid fill (bg-destructive),
+     *    tint (bg-destructive/15) and text (text-destructive). Ink on top.
+     * ------------------------------------------------------------------ */
+    --state-foreground: oklch(0.17 0.02 264); /* shared ink for status fills */
+    --destructive: oklch(0.72 0.16 22);
+    --destructive-foreground: var(--state-foreground);
+    --success: var(--chart-4);
+    --success-foreground: var(--state-foreground);
+    --warning: var(--chart-2);
+    --warning-foreground: var(--state-foreground);
+    --caution: oklch(0.77 0.14 55); /* "are you sure" orange, between warning and destructive */
+    --caution-foreground: var(--state-foreground);
+
+    /* ------------------------------------------------------------------ *
+     * 6. CHARTS - Recharts series (CPU/memory/network) and generated avatars
+     *    Drawn on --card; each needs 3:1 against it (WCAG 1.4.11, graphics).
+     * ------------------------------------------------------------------ */
+    --chart-1: oklch(0.8 0.11 205); /* cyan: CPU, memory, network-out */
+    --chart-2: oklch(0.84 0.14 88); /* amber: network-in; also --warning */
+    --chart-3: var(--primary);
+    --chart-4: oklch(0.78 0.15 152); /* green; also --success */
+    --chart-5: var(--destructive);
+
+    /* ------------------------------------------------------------------ *
+     * 7. SIDEBAR / NAVIGATION - aliases today, listed so you can split them
+     * ------------------------------------------------------------------ */
+    --sidebar: var(--card);
+    --sidebar-foreground: var(--card-foreground);
+    --sidebar-primary: var(--primary);
+    --sidebar-primary-foreground: var(--primary-foreground);
+    --sidebar-accent: var(--popover);
+    --sidebar-accent-foreground: var(--foreground);
+    --sidebar-border: var(--border);
+    --sidebar-ring: var(--ring);
+
+    /* ------------------------------------------------------------------ *
+     * 8. SHAPE, FEEL AND LAYOUT - not colours, but part of the token contract
+     *    This theme keeps the panel's values; the stock ones are listed so a
+     *    copy can change them. Uncomment to override.
+     * ------------------------------------------------------------------ */
+    /* --radius: 0.5rem; */ /* every rounded-* utility and the scrollbar thumb shape */
+    /* --spinner-overlay-opacity: 0.45; */ /* how far content dims under a loading spinner */
+    /* --font-sans: 'IBM Plex Sans', system-ui, sans-serif; */ /* body text; load your own font files */
+    /* --font-header: 'IBM Plex Sans', system-ui, sans-serif; */ /* headings */
+
+    /* --layout-content-width: 75rem; */ /* max width of the navigation bars and every screen */
+    /* --layout-auth-width: 43.75rem; */ /* max width of the sign-in screens */
+    /* --layout-sidebar-width: 16rem; */ /* admin sidebar, and the sub-navigation when it is on the side */
+    /* --spacing: 0.25rem; */ /* density: every padding, margin and gap multiplies it (try 0.22-0.28rem) */
+
+    /* ------------------------------------------------------------------ *
+     * 9. TERMINAL (server console)
+     *    Ghostty paints to a <canvas>; the panel resolves these when the
+     *    console mounts and again whenever the theme changes. Hex is used here
+     *    because it is the lingua franca of terminal palettes - any CSS colour
+     *    works, except pure #000000, which Ghostty reads as "not set" (use
+     *    #010101). Every colour below is audited against the background.
+     * ------------------------------------------------------------------ */
+    --terminal-background: oklch(0.13 0.01 264); /* darker than the page so the console reads as a well */
+    --terminal-foreground: #d5d9e3; /* uncoloured output - most of what a console prints */
+    --terminal-cursor: var(--terminal-background); /* read-only log: cursor hidden by matching the background */
+    --terminal-selection: #aab8f5;
+    --terminal-selection-foreground: #0d0f14;
+
+    --terminal-ansi-black: #2b2f3b;
+    --terminal-ansi-red: #f2777f;
+    --terminal-ansi-green: #8fd18a;
+    --terminal-ansi-yellow: #e5c56b;
+    --terminal-ansi-blue: #7da6f8;
+    --terminal-ansi-magenta: #c49cf2;
+    --terminal-ansi-cyan: #62cfe0;
+    --terminal-ansi-white: #c9cdd8;
+
+    --terminal-ansi-bright-black: #8a91a3; /* "dim" text: timestamps, debug lines */
+    --terminal-ansi-bright-red: #ff959b;
+    --terminal-ansi-bright-green: #b1e6ab;
+    --terminal-ansi-bright-yellow: #f5dc92;
+    --terminal-ansi-bright-blue: #a3c1ff;
+    --terminal-ansi-bright-magenta: #dbbcfb;
+    --terminal-ansi-bright-cyan: #94e4f0;
+    --terminal-ansi-bright-white: #f3f5f9;
+
+    /* ------------------------------------------------------------------ *
+     * 10. CODE EDITOR (CodeMirror, file manager)
+     *     The panel defines these once in :root with fixed hex values, so
+     *     they do NOT follow the role tokens unless a theme sets them.
+     * ------------------------------------------------------------------ */
+    --editor-background: oklch(0.185 0.012 264);
+    --editor-foreground: #d5d9e3;
+    --editor-muted: #8a91a3; /* comments, line numbers, fold markers */
+    --editor-caret: #a3b4ff;
+    --editor-selection: #323b5c;
+    --editor-selected-foreground: #ffffff; /* selected autocomplete row, on --editor-selection */
+    --editor-active-line: #1d2029;
+    --editor-border: #2c303c; /* gutter rule, fold placeholder fill */
+    --editor-search-match: #5a4a1c;
+    --editor-search-match-selected: #6b561c;
+    --editor-tooltip: #23262f;
+    --editor-tooltip-border: #3a3f4e;
+
+    --editor-syntax-keyword: #c49cf2;
+    --editor-syntax-name: #f2777f; /* tags, property names */
+    --editor-syntax-function: #7da6f8;
+    --editor-syntax-constant: #f0a171; /* numbers, booleans, atoms */
+    --editor-syntax-definition: #62cfe0;
+    --editor-syntax-type: #e5c56b;
+    --editor-syntax-operator: #9fb4d6;
+    --editor-syntax-string: #8fd18a;
+    --editor-syntax-invalid: #ff959b;
+
+    /* ------------------------------------------------------------------ *
+     * 11. TEXT SELECTION (everything outside the console and the editor)
+     *     The panel has no default: until a theme sets --selection the
+     *     browser's own highlight is used. --selection-foreground replaces
+     *     the colour of ALL selected text (body, muted, links, status), so
+     *     one audited pair covers every case. Needs container style queries;
+     *     a browser without them keeps its default highlight.
+     * ------------------------------------------------------------------ */
+    --selection: var(--terminal-selection); /* same highlight as the console, so selecting looks alike everywhere */
+    --selection-foreground: var(--terminal-selection-foreground);
+
+    /* ------------------------------------------------------------------ *
+     * 12. SCROLLBARS
+     *     WebKit/Blink draw an outlined thumb: --scrollbar-thumb is the 1px
+     *     outline, --scrollbar-thumb-fill the inside. Firefox draws a solid
+     *     thumb in --scrollbar-thumb. The thumb must be findable on every
+     *     surface it scrolls over (3:1, WCAG 1.4.11).
+     * ------------------------------------------------------------------ */
+    --scrollbar-thumb: var(--muted-foreground);
+    --scrollbar-thumb-fill: var(--muted);
+    --scrollbar-track: transparent; /* the surface underneath shows through */
+
+    /* ------------------------------------------------------------------ *
+     * 13. BROWSER CHROME - what the browser itself draws
+     * ------------------------------------------------------------------ */
+    --color-scheme: dark; /* native <select> popups, autofill, date pickers, Firefox scrollbars: `dark` or `light` */
+    /* Mobile toolbar / installed-app title bar. The panel copies this into its
+       <meta name="theme-color"> once this stylesheet has loaded. This extension
+       ALSO server-renders the same colour (DarkThemeProvider::THEME_COLOR) so it
+       is right from the first byte; a server-rendered tag is never overwritten,
+       so keep the two equal (`npm run contrast` checks). Must be a plain colour
+       the browser UI understands - hex, not var(). */
+    --theme-color: #090b10; /* = --background */
+}

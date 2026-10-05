@@ -1,0 +1,97 @@
+name: Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_call:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  list:
+    name: List extensions
+    runs-on: ubuntu-24.04
+    outputs:
+      extensions: ${{ steps.list.outputs.extensions }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: list
+        run: echo "extensions=$(node scripts/extensions.mjs)" >> "$GITHUB_OUTPUT"
+
+  build:
+    name: ${{ matrix.extension }}
+    needs: list
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        extension: ${{ fromJson(needs.list.outputs.extensions) }}
+    steps:
+      - uses: actions/checkout@v4
+
+      # Extensions build against the panel's SDK, which is not on npm yet. Set the
+      # PANEL_REPOSITORY / PANEL_REF repository variables to build against a fork
+      # or another branch.
+      - name: Check out the panel SDK
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ vars.PANEL_REPOSITORY || 'pterodactyl/panel' }}
+          ref: ${{ vars.PANEL_REF || '2.0-develop' }}
+          path: .panel
+          sparse-checkout: packages/sdk
+          persist-credentials: false
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: ${{ matrix.extension }}/package-lock.json
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.4
+          coverage: none
+
+      - name: Install
+        working-directory: ${{ matrix.extension }}
+        run: npm ci --no-audit --no-fund
+
+      - name: Build
+        working-directory: ${{ matrix.extension }}
+        run: npm run build
+
+      - name: Typecheck
+        working-directory: ${{ matrix.extension }}
+        run: npm run typecheck --if-present
+
+      - name: Test
+        working-directory: ${{ matrix.extension }}
+        run: |
+          npm run test --if-present
+          npm run contrast --if-present
+
+      - name: Lint PHP
+        run: |
+          find "${{ matrix.extension }}" -name '*.php' -not -path '*/node_modules/*' -print0 \
+            | xargs -0 -r -n1 php -l > /dev/null
+
+      - name: Check package
+        run: node scripts/check.mjs "${{ matrix.extension }}"
+
+      - name: Package
+        run: |
+          node scripts/stage.mjs "${{ matrix.extension }}" out
+          cd "out/${{ matrix.extension }}"
+          zip -q -r "../${{ matrix.extension }}.zip" .
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.extension }}
+          path: out/${{ matrix.extension }}.zip
+          if-no-files-found: error

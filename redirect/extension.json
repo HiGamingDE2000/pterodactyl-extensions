@@ -1,0 +1,38 @@
+{
+    "$schema": "./node_modules/@pterodactyl/sdk/manifest.schema.json",
+    "id": "redirect",
+    "name": "Redirect",
+    "version": "1.0.0",
+    "requires": {
+        "panel": "^2.0.0-dev",
+        "sdk": "^2.0.0-beta.4",
+        "php": "^8.3"
+    },
+    "description": "Short URL redirects served by the panel, managed from the admin area.",
+    "author": "Anthony",
+    "provider": "Redirect\\RedirectProvider",
+    "autoload": {
+        "Redirect\\": "src"
+    },
+    "routes": {
+        "root": [
+            "go"
+        ]
+    },
+    "ui": {
+        "entry": "dist/client.js",
+        "mode": "native",
+        "prefix": "rdr",
+        "screens": [
+            {
+                "id": "redirects",
+                "area": "admin",
+                "path": "redirects",
+                "nav": {
+                    "label": "Redirects",
+                    "icon": "puzzle"
+                }
+            }
+        ]
+    }
+}
