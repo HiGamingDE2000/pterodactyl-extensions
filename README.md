@@ -8,14 +8,17 @@ Extensions for the Pterodactyl panel (v2). Each folder is one extension.
 | [Custom Buttons](custom-buttons) | Admin-defined link buttons and sidebar items on the server page. | [custom-buttons.zip](https://github.com/pterodactyl/pterodactyl-extensions/releases/latest/download/custom-buttons.zip) |
 | [Dark Theme](dark-theme) | A deeper, neutral dark theme, and a template for writing your own. | [dark-theme.zip](https://github.com/pterodactyl/pterodactyl-extensions/releases/latest/download/dark-theme.zip) |
 | [Redirect](redirect) | Short links served by the panel, such as `/go/discord`. | [redirect.zip](https://github.com/pterodactyl/pterodactyl-extensions/releases/latest/download/redirect.zip) |
+| [SSO](sso) | OAuth login for various third party providers such as Discord. | [sso.zip](https://github.com/pterodactyl/pterodactyl-extensions/releases/latest/download/sso.zip) |
 
 ## Installing an extension
 
-Download its zip from the [latest release](https://github.com/pterodactyl/pterodactyl-extensions/releases/latest), then on the panel host:
+Download its zip from the [latest release](https://github.com/pterodactyl/pterodactyl-extensions/releases/latest), then on the panel host, either run:
 
 ```sh
-php artisan p:extension:install /path/to/dark-theme.zip --enable
+php artisan p:extension:install /path/to/extension.zip --enable
 ```
+
+Or install the extension using the admin panel under Admin > Extensions.
 
 Reload the panel afterwards. Extensions can be disabled or removed again from
 Admin > Extensions.

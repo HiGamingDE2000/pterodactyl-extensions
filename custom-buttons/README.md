@@ -14,11 +14,13 @@ Lets admins add their own link buttons and sidebar items to the server page.
 ## Install
 
 Download [custom-buttons.zip](https://github.com/pterodactyl/pterodactyl-extensions/releases/latest/download/custom-buttons.zip)
-from the latest release, then on the panel host:
+from the latest release, then on the panel host, either run:
 
 ```sh
 php artisan p:extension:install /path/to/custom-buttons.zip --enable
 ```
+
+Or install the extension using the admin panel under Admin > Extensions.
 
 Reload the panel, then manage entries under Admin > Custom Buttons.
 

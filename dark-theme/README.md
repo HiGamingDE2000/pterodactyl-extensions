@@ -10,11 +10,13 @@ panel's components change.
 ## Install
 
 Download [dark-theme.zip](https://github.com/pterodactyl/pterodactyl-extensions/releases/latest/download/dark-theme.zip)
-from the latest release, then on the panel host:
+from the latest release, then on the panel host, either run:
 
 ```sh
 php artisan p:extension:install /path/to/dark-theme.zip --enable
 ```
+
+Or install the extension using the admin panel under Admin > Extensions.
 
 Reload the panel. Disable the extension to get the stock look back.
 

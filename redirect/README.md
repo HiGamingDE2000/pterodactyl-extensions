@@ -7,11 +7,13 @@ redirects there.
 ## Install
 
 Download [redirect.zip](https://github.com/pterodactyl/pterodactyl-extensions/releases/latest/download/redirect.zip)
-from the latest release, then on the panel host:
+from the latest release, then on the panel host, either run:
 
 ```sh
 php artisan p:extension:install /path/to/redirect.zip --enable
 ```
+
+Or install the extension using the admin panel under Admin > Extensions.
 
 Reload the panel, then manage links under Admin > Redirects. The list shows each
 link with a copy button, its destination, and how often and how recently it has been
