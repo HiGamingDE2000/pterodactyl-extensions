@@ -1,0 +1,33 @@
+{
+    "$schema": "./node_modules/@pterodactyl/sdk/manifest.schema.json",
+    "id": "custom-buttons",
+    "name": "Custom Buttons",
+    "version": "1.0.0",
+    "requires": {
+        "panel": "^2.0.0-dev",
+        "sdk": "^2.0.0-beta.4",
+        "php": "^8.3"
+    },
+    "description": "Admin-defined buttons and sidebar links on the server page, with server placeholders in the URL, optional egg filtering, icons and colours.",
+    "author": "Anthony",
+    "provider": "CustomButtons\\CustomButtonsProvider",
+    "autoload": {
+        "CustomButtons\\": "src"
+    },
+    "ui": {
+        "entry": "dist/client.js",
+        "mode": "native",
+        "prefix": "cb",
+        "screens": [
+            {
+                "id": "custom-buttons",
+                "area": "admin",
+                "path": "custom-buttons",
+                "nav": {
+                    "label": "Custom Buttons",
+                    "icon": "puzzle"
+                }
+            }
+        ]
+    }
+}

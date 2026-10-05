@@ -1,0 +1,4 @@
+@import 'tailwindcss/theme.css' layer(theme) prefix(ann);
+@import 'tailwindcss/utilities.css' layer(utilities) prefix(ann);
+@import '@pterodactyl/sdk/theme.css';
+@source './**/*.{ts,tsx}';
