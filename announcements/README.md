@@ -12,13 +12,11 @@ banners and can dismiss them.
 ## Install
 
 Download [announcements.zip](https://github.com/pterodactyl/pterodactyl-extensions/releases/latest/download/announcements.zip)
-from the latest release, then on the panel host, either run:
+from the latest release, then on the panel host:
 
 ```sh
 php artisan p:extension:install /path/to/announcements.zip --enable
 ```
-
-Or install the extension using the admin panel under Admin > Extensions.
 
 Reload the panel, then manage announcements under Admin > Announcements.
 
