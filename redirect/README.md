@@ -6,7 +6,7 @@ redirects there.
 
 ## Install
 
-Download [redirect.zip](https://github.com/pterodactyl/pterodactyl-extensions/releases/latest/download/redirect.zip)
+Download [redirect.zip](https://github.com/pterodactyl/extensions/releases/latest/download/redirect.zip)
 from the latest release, then on the panel host:
 
 ```sh

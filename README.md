@@ -4,14 +4,14 @@ Extensions for the Pterodactyl panel (v2). Each folder is one extension.
 
 | Extension | What it does | Download |
 | --- | --- | --- |
-| [Announcements](announcements) | Panel-wide announcement banners that users can dismiss. | [announcements.zip](https://github.com/pterodactyl/pterodactyl-extensions/releases/latest/download/announcements.zip) |
-| [Custom Buttons](custom-buttons) | Admin-defined link buttons and sidebar items on the server page. | [custom-buttons.zip](https://github.com/pterodactyl/pterodactyl-extensions/releases/latest/download/custom-buttons.zip) |
-| [Dark Theme](dark-theme) | A deeper, neutral dark theme, and a template for writing your own. | [dark-theme.zip](https://github.com/pterodactyl/pterodactyl-extensions/releases/latest/download/dark-theme.zip) |
-| [Redirect](redirect) | Short links served by the panel, such as `/go/discord`. | [redirect.zip](https://github.com/pterodactyl/pterodactyl-extensions/releases/latest/download/redirect.zip) |
+| [Announcements](announcements) | Panel-wide announcement banners that users can dismiss. | [announcements.zip](https://github.com/pterodactyl/extensions/releases/latest/download/announcements.zip) |
+| [Custom Buttons](custom-buttons) | Admin-defined link buttons and sidebar items on the server page. | [custom-buttons.zip](https://github.com/pterodactyl/extensions/releases/latest/download/custom-buttons.zip) |
+| [Dark Theme](dark-theme) | A deeper, neutral dark theme, and a template for writing your own. | [dark-theme.zip](https://github.com/pterodactyl/extensions/releases/latest/download/dark-theme.zip) |
+| [Redirect](redirect) | Short links served by the panel, such as `/go/discord`. | [redirect.zip](https://github.com/pterodactyl/extensions/releases/latest/download/redirect.zip) |
 
 ## Installing an extension
 
-Download its zip from the [latest release](https://github.com/pterodactyl/pterodactyl-extensions/releases/latest), then on the panel host:
+Download its zip from the [latest release](https://github.com/pterodactyl/extensions/releases/latest), then on the panel host:
 
 ```sh
 php artisan p:extension:install /path/to/dark-theme.zip --enable

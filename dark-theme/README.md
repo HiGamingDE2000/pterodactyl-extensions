@@ -9,7 +9,7 @@ panel's components change.
 
 ## Install
 
-Download [dark-theme.zip](https://github.com/pterodactyl/pterodactyl-extensions/releases/latest/download/dark-theme.zip)
+Download [dark-theme.zip](https://github.com/pterodactyl/extensions/releases/latest/download/dark-theme.zip)
 from the latest release, then on the panel host:
 
 ```sh

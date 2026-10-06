@@ -1,10 +1,19 @@
 name: Release
 
-# Publishes one release containing <extension>.zip for every extension. Asset names
-# are stable, so each README can link to releases/latest/download/<extension>.zip.
+# Publishes <extension>.zip for every extension to the release of a tag. Asset names are
+# stable, so each README can link to releases/latest/download/<extension>.zip.
+#
+# Runs when a v* tag is pushed. It can also be run by hand for an existing tag, which
+# rebuilds that tag and replaces the assets on its release.
 on:
   push:
     tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing tag to build and publish, for example v1.0.1.
+        type: string
+        required: true
 
 permissions:
   contents: write
@@ -12,23 +21,29 @@ permissions:
 jobs:
   build:
     uses: ./.github/workflows/build.yml
-    secrets: inherit
+    with:
+      ref: ${{ inputs.tag || github.ref_name }}
 
   release:
     name: Publish release
     needs: build
     runs-on: ubuntu-24.04
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      TAG: ${{ inputs.tag || github.ref_name }}
     steps:
       - uses: actions/download-artifact@v4
         with:
           path: artifacts
           merge-multiple: true
 
-      - name: Create release
-        env:
-          GH_TOKEN: ${{ github.token }}
+      # The release may already exist (created from the GitHub UI, or by an earlier run):
+      # then only its assets are replaced.
+      - name: Publish assets
         run: |
-          gh release create "${{ github.ref_name }}" artifacts/*.zip \
-            --repo "${{ github.repository }}" \
-            --title "${{ github.ref_name }}" \
-            --generate-notes
+          if gh release view "$TAG" > /dev/null 2>&1; then
+            gh release upload "$TAG" artifacts/*.zip --clobber
+          else
+            gh release create "$TAG" artifacts/*.zip --title "$TAG" --generate-notes --verify-tag
+          fi

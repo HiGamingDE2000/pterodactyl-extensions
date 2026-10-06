@@ -11,7 +11,7 @@ banners and can dismiss them.
 
 ## Install
 
-Download [announcements.zip](https://github.com/pterodactyl/pterodactyl-extensions/releases/latest/download/announcements.zip)
+Download [announcements.zip](https://github.com/pterodactyl/extensions/releases/latest/download/announcements.zip)
 from the latest release, then on the panel host:
 
 ```sh

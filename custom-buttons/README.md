@@ -13,7 +13,7 @@ Lets admins add their own link buttons and sidebar items to the server page.
 
 ## Install
 
-Download [custom-buttons.zip](https://github.com/pterodactyl/pterodactyl-extensions/releases/latest/download/custom-buttons.zip)
+Download [custom-buttons.zip](https://github.com/pterodactyl/extensions/releases/latest/download/custom-buttons.zip)
 from the latest release, then on the panel host:
 
 ```sh

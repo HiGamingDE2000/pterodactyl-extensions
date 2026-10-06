@@ -5,6 +5,11 @@ on:
     branches: [main]
   pull_request:
   workflow_call:
+    inputs:
+      ref:
+        description: Commit, branch or tag to build. Defaults to the triggering commit.
+        type: string
+        required: false
 
 permissions:
   contents: read
@@ -21,6 +26,8 @@ jobs:
       extensions: ${{ steps.list.outputs.extensions }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref || github.sha }}
       - id: list
         run: echo "extensions=$(node scripts/extensions.mjs)" >> "$GITHUB_OUTPUT"
 
@@ -34,6 +41,8 @@ jobs:
         extension: ${{ fromJson(needs.list.outputs.extensions) }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref || github.sha }}
 
       # Extensions build against the panel's SDK, which is not on npm yet. Set the
       # PANEL_REPOSITORY / PANEL_REF repository variables to build against a fork
