@@ -1,0 +1,22 @@
+{
+    "$schema": "./node_modules/@pterodactyl/sdk/manifest.schema.json",
+    "id": "friendly-captcha",
+    "name": "Friendly Captcha",
+    "version": "1.0.0",
+    "requires": {
+        "panel": "^2.0.0-dev",
+        "sdk": "^2.0.0-beta.4",
+        "php": "^8.3"
+    },
+    "description": "Replaces Google reCAPTCHA with the privacy-friendly Friendly Captcha on the login, password recovery and password reset forms.",
+    "author": "Hi Gaming",
+    "provider": "FriendlyCaptcha\\FriendlyCaptchaProvider",
+    "autoload": {
+        "FriendlyCaptcha\\": "src"
+    },
+    "ui": {
+        "entry": "dist/client.js",
+        "mode": "native",
+        "prefix": "frc"
+    }
+}

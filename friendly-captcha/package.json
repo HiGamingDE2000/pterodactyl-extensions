@@ -1,0 +1,23 @@
+{
+    "name": "friendly-captcha",
+    "private": true,
+    "version": "1.0.0",
+    "type": "module",
+    "scripts": {
+        "build": "vite build",
+        "dev": "vite build --watch",
+        "typecheck": "tsc"
+    },
+    "dependencies": {
+        "@friendlycaptcha/sdk": "^1.0.2"
+    },
+    "devDependencies": {
+        "@pterodactyl/sdk": "file:../.panel/packages/sdk",
+        "@types/react": "^19",
+        "@types/react-dom": "^19",
+        "react": "^19.2.0",
+        "react-dom": "^19.2.0",
+        "typescript": "^6",
+        "vite": "^8"
+    }
+}

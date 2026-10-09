@@ -7,6 +7,7 @@ Extensions for the Pterodactyl panel (v2). Each folder is one extension.
 | [Announcements](announcements) | Panel-wide announcement banners that users can dismiss. | [announcements.zip](https://github.com/pterodactyl/extensions/releases/latest/download/announcements.zip) |
 | [Custom Buttons](custom-buttons) | Admin-defined link buttons and sidebar items on the server page. | [custom-buttons.zip](https://github.com/pterodactyl/extensions/releases/latest/download/custom-buttons.zip) |
 | [Dark Theme](dark-theme) | A deeper, neutral dark theme, and a template for writing your own. | [dark-theme.zip](https://github.com/pterodactyl/extensions/releases/latest/download/dark-theme.zip) |
+| [Friendly Captcha](friendly-captcha) | Replaces Google reCAPTCHA with the privacy-friendly Friendly Captcha on the login, password recovery and password reset forms. | [friendly-captcha.zip](https://github.com/HiGamingDE2000/pterodactyl-extensions/releases/latest/download/friendly-captcha.zip) |
 | [Redirect](redirect) | Short links served by the panel, such as `/go/discord`. | [redirect.zip](https://github.com/pterodactyl/extensions/releases/latest/download/redirect.zip) |
 
 ## Installing an extension
