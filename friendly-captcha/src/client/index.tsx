@@ -10,7 +10,7 @@ const isCaptchaRequest = (url: string | undefined): boolean => {
         return false;
     }
 
-    const path = url.replace(/^https?:\\/\\/[^\/]+/, '').split('?')[0].replace(/\\/+$, '');
+    const path = url.replace(/^https?:\/\/[^\/]+/, '').split('?')[0].replace(/\/+$/, '');
 
     return (CAPTCHA_ENDPOINTS as readonly string[]).includes(path);
 };

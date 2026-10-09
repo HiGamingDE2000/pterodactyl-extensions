@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace FriendlyCaptcha;
 
-use FriendlyCaptcha\\Http\\Middleware\\VerifyFriendlyCaptcha;
-use Illuminate\\Routing\\Router;
-use Pterodactyl\\Extensions\\ExtensionProvider;
-use Pterodactyl\\Services\\Extensions\\ExtensionSettingDefinition;
-use Pterodactyl\\Services\\Extensions\\ExtensionSettingsDefinition;
+use FriendlyCaptcha\Http\Middleware\VerifyFriendlyCaptcha;
+use Illuminate\Routing\Router;
+use Pterodactyl\Extensions\ExtensionProvider;
+use Pterodactyl\Services\Extensions\ExtensionSettingDefinition;
+use Pterodactyl\Services\Extensions\ExtensionSettingsDefinition;
 
 class FriendlyCaptchaProvider extends ExtensionProvider
 {

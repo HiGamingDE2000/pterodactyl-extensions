@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace FriendlyCaptcha\\Http\\Middleware;
+namespace FriendlyCaptcha\Http\Middleware;
 
 use Closure;
-use GuzzleHttp\\Client;
-use GuzzleHttp\\Exception\\GuzzleException;
-use Illuminate\\Contracts\\Events\\Dispatcher;
-use Illuminate\\Http\\Request;
-use Illuminate\\Http\\Response;
-use Pterodactyl\\Events\\Auth\\FailedCaptcha;
-use Pterodactyl\\Services\\Extensions\\ExtensionManager;
-use Symfony\\Component\\HttpKernel\\Exception\\HttpException;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
+use Illuminate\Contracts\Events\Dispatcher;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Pterodactyl\Events\Auth\FailedCaptcha;
+use Pterodactyl\Services\Extensions\ExtensionManager;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class VerifyFriendlyCaptcha
 {
@@ -29,7 +29,7 @@ class VerifyFriendlyCaptcha
     /**
      * Handle an incoming request.
      *
-     * @param  Closure(Request): \\Symfony\\Component\\HttpFoundation\\Response  $next
+     * @param  Closure(Request): \Symfony\Component\HttpFoundation\Response  $next
      */
     public function handle(Request $request, Closure $next): mixed
     {
