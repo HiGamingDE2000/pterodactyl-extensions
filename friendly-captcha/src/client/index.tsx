@@ -5,6 +5,17 @@ import { captchaSession, resetSession, waitForSolution } from './session';
 /** POST endpoints whose requests must carry a captcha solution. */
 const CAPTCHA_ENDPOINTS = ['/auth/login', '/auth/password', '/auth/password/reset'] as const;
 
+/** The parts of the SDK http client's request config our interceptors touch. */
+interface HttpRequestConfig {
+    url?: string;
+    data?: unknown;
+}
+
+/** The parts of a response our response interceptor needs. */
+interface HttpResponseConfig {
+    config?: { url?: string };
+}
+
 const isCaptchaRequest = (url: string | undefined): boolean => {
     if (!url) {
         return false;
@@ -31,7 +42,7 @@ export default definePterodactylExtension({
         // Attach the solved puzzle token to the auth requests that require a
         // captcha. The core forms send `g-recaptcha-response` (empty while the
         // core reCAPTCHA is disabled); our middleware reads `frc-captcha-response`.
-        http.interceptors.request.use(async (requestConfig) => {
+        http.interceptors.request.use(async (requestConfig: HttpRequestConfig) => {
             if (!isCaptchaRequest(requestConfig.url)) {
                 return requestConfig;
             }
@@ -51,7 +62,7 @@ export default definePterodactylExtension({
         // A solution verifies exactly once: reset the widget after every auth
         // attempt so the next one gets a fresh puzzle.
         http.interceptors.response.use(
-            (response) => {
+            (response: HttpResponseConfig) => {
                 if (isCaptchaRequest(response.config?.url)) {
                     resetSession();
                 }
