@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace FriendlyCaptcha;
 
 use FriendlyCaptcha\Http\Middleware\VerifyFriendlyCaptcha;
-use Illuminate\Foundation\Http\Kernel;
+use Illuminate\Routing\Router;
 use Pterodactyl\Extensions\ExtensionProvider;
 use Pterodactyl\Services\Extensions\ExtensionSettingDefinition;
 use Pterodactyl\Services\Extensions\ExtensionSettingsDefinition;
@@ -14,16 +14,14 @@ class FriendlyCaptchaProvider extends ExtensionProvider
 {
     public function register(): void
     {
-        // The panel defines the `recaptcha` middleware alias in bootstrap/app.php and
-        // pushes it onto the router when the HTTP kernel is resolved (after all
-        // providers have booted). Registering the same hook here runs ours after
-        // the panel's and re-aliases last, so our middleware handles the auth
-        // routes. While this extension is disabled or removed the panel falls back
-        // to its own VerifyReCaptcha middleware. Aliases are resolved at dispatch
-        // time, so late re-aliasing is safe.
-        $this->app->afterResolving(Kernel::class, function (): void {
-            $this->app->make('router')->aliasMiddleware('recaptcha', VerifyFriendlyCaptcha::class);
-        });
+        // The panel defines the `recaptcha` middleware alias in bootstrap/app.php, and the
+        // HTTP kernel copies its aliases onto the router exactly once, in its constructor -
+        // which runs before extension providers register. Nothing syncs them again during
+        // the request, so re-aliasing here sticks: our middleware takes over the auth
+        // routes' `recaptcha` middleware, and the extension's settings decide whether it
+        // enforces anything. While this extension is disabled or removed, the panel falls
+        // back to its own VerifyReCaptcha middleware.
+        $this->app->make(Router::class)->aliasMiddleware('recaptcha', VerifyFriendlyCaptcha::class);
     }
 
     public function boot(): void

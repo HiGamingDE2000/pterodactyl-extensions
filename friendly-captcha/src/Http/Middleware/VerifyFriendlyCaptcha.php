@@ -11,7 +11,7 @@ use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Pterodactyl\Events\Auth\FailedCaptcha;
-use Pterodactyl\Services\Extensions\ExtensionManager;
+use Pterodactyl\Services\Extensions\ExtensionRepository;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class VerifyFriendlyCaptcha
@@ -23,7 +23,7 @@ class VerifyFriendlyCaptcha
 
     public function __construct(
         private readonly Dispatcher $dispatcher,
-        private readonly ExtensionManager $extensions,
+        private readonly ExtensionRepository $extensions,
     ) {}
 
     /**
