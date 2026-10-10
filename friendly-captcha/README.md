@@ -57,7 +57,8 @@ Uninstall or disable any time from Admin > Extensions.
 * If the Friendly Captcha API cannot be reached, requests are accepted
   (fail-open), as recommended by Friendly Captcha. Invalid solutions are
   rejected with HTTP 400, like the core reCAPTCHA middleware does.
-* On the login form the widget sits below the submit button; on the password
-  pages it appears below the form card (the panel offers page-level slots there).
+* On every auth form the widget sits inside the form card, below the submit
+  button. The password pages only offer page-level slots, so the component
+  mounts its widget into the card, above the "Return to Login" link.
 * Tested against panel 2.0-develop (sdk 2.0.0-beta.4). The v2 extension API is
   still beta and may change.
